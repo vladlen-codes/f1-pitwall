@@ -6,7 +6,7 @@ per-driver telemetry, weather, and race control messages all from real,
 publicly available F1 data.
 
 This is a from-scratch, MIT-licensed re-platform. It draws feature *ideas*
-(not code) from four reference projects — see [Feature provenance](#feature-provenance)
+(not code) from four reference projects see [Feature provenance](#feature-provenance)
 for what came from where and why nothing was copied line-for-line.
 
 ## Features
