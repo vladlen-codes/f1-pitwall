@@ -65,7 +65,15 @@ async function get<T>(
       continue;
     }
     if (!res.ok) {
-      throw new Error(`OpenF1 request failed (${res.status}): ${url}`);
+      // OpenF1 error bodies are `{ "detail": "..." }` with a human-readable
+      // explanation (e.g. live-session access restrictions) — surface that
+      // instead of just the status code when it's available.
+      const detail = await res
+        .clone()
+        .json()
+        .then((body) => (typeof body?.detail === "string" ? body.detail : undefined))
+        .catch(() => undefined);
+      throw new Error(detail ?? `OpenF1 request failed (${res.status}): ${url}`);
     }
     return res.json();
   }

@@ -17,17 +17,26 @@ export function SessionPicker() {
   const [meetingKey, setMeetingKey] = useState<number | null>(null);
   const [meetingsByYear, setMeetingsByYear] = useState<Record<number, Meeting[]>>({});
   const [sessionsByMeeting, setSessionsByMeeting] = useState<Record<number, Session[]>>({});
+  const [meetingsError, setMeetingsError] = useState<string | null>(null);
+  const [sessionsError, setSessionsError] = useState<string | null>(null);
 
   useEffect(() => {
     if (meetingsByYear[year]) return;
     let cancelled = false;
-    openf1.meetings(year).then((data) => {
-      if (cancelled) return;
-      setMeetingsByYear((prev) => ({
-        ...prev,
-        [year]: sortByDate(data.filter((m) => !m.is_cancelled)),
-      }));
-    });
+    setMeetingsError(null);
+    openf1
+      .meetings(year)
+      .then((data) => {
+        if (cancelled) return;
+        setMeetingsByYear((prev) => ({
+          ...prev,
+          [year]: sortByDate(data.filter((m) => !m.is_cancelled)),
+        }));
+      })
+      .catch((err: unknown) => {
+        if (cancelled) return;
+        setMeetingsError(err instanceof Error ? err.message : "Failed to load meetings.");
+      });
     return () => {
       cancelled = true;
     };
@@ -36,10 +45,17 @@ export function SessionPicker() {
   useEffect(() => {
     if (meetingKey == null || sessionsByMeeting[meetingKey]) return;
     let cancelled = false;
-    openf1.sessions(meetingKey).then((data) => {
-      if (cancelled) return;
-      setSessionsByMeeting((prev) => ({ ...prev, [meetingKey]: sortByDate(data) }));
-    });
+    setSessionsError(null);
+    openf1
+      .sessions(meetingKey)
+      .then((data) => {
+        if (cancelled) return;
+        setSessionsByMeeting((prev) => ({ ...prev, [meetingKey]: sortByDate(data) }));
+      })
+      .catch((err: unknown) => {
+        if (cancelled) return;
+        setSessionsError(err instanceof Error ? err.message : "Failed to load sessions.");
+      });
     return () => {
       cancelled = true;
     };
@@ -76,7 +92,9 @@ export function SessionPicker() {
 
       <div className="space-y-2">
         <label className="text-sm font-medium text-neutral-400">Grand Prix</label>
-        {!meetings ? (
+        {meetingsError ? (
+          <p className="text-sm text-red-500">{meetingsError}</p>
+        ) : !meetings ? (
           <p className="text-sm text-neutral-500">Loading meetings…</p>
         ) : (
           <select
@@ -97,7 +115,9 @@ export function SessionPicker() {
       {meetingKey != null && (
         <div className="space-y-2">
           <label className="text-sm font-medium text-neutral-400">Session</label>
-          {!sessions ? (
+          {sessionsError ? (
+            <p className="text-sm text-red-500">{sessionsError}</p>
+          ) : !sessions ? (
             <p className="text-sm text-neutral-500">Loading sessions…</p>
           ) : (
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
