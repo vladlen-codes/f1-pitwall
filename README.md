@@ -118,17 +118,16 @@ practice:
 
 ## Feature provenance
 
-Four repos were reviewed for feature ideas. Nothing was copied verbatim —
-see [Licensing note](#licensing-note) for why — but each shaped a specific
+Four repos were reviewed for feature ideas. Nothing was copied verbatim see [Licensing note](#licensing-note) for why but each shaped a specific
 part of this app:
 
 | Source | License | What we took the idea from | Where it landed |
 |---|---|---|---|
-| [IAmTomShaw/f1-race-replay](https://github.com/IAmTomShaw/f1-race-replay) (the repo the task listed as `vladlen-codes/f1-race-replay` is a fork of this) | MIT (per README; no LICENSE file in either repo) | Scrubbable timeline with flag/SC/DNF markers; playback speed tiers; leaderboard with tyre + gap; per-driver telemetry panel; progress-along-track math for ordering cars | `TimelineScrubber.tsx`, `Leaderboard.tsx`, `TelemetryPanel.tsx`, `replayStore.ts` |
+| [IAmTomShaw/f1-race-replay](https://github.com/IAmTomShaw/f1-race-replay) (the repo the task listed as `vladlen-codes/f1-pitwall` is a fork of this) | MIT (per README; no LICENSE file in either repo) | Scrubbable timeline with flag/SC/DNF markers; playback speed tiers; leaderboard with tyre + gap; per-driver telemetry panel; progress-along-track math for ordering cars | `TimelineScrubber.tsx`, `Leaderboard.tsx`, `TelemetryPanel.tsx`, `replayStore.ts` |
 | [theOehrly/Fast-F1](https://github.com/theOehrly/Fast-F1) | MIT | Data model shape (laps/telemetry/weather/track-status/session-results); sector splits; tyre compound + tyre-life tracking; track-status flag timeline | `types/openf1.ts`, `replay.ts` (leaderboard reconstruction), `TimelineScrubber.tsx` (flag markers) |
 | [slowlydev/f1-dash](https://github.com/slowlydev/f1-dash) | AGPL-3.0 | Live-style leaderboard layout (position/gap/interval/tyre/lap); windowed/buffered data-fetching pattern; track map as an SVG overlay; race control + weather widgets; Next.js + Zustand + Tailwind stack choice | `Leaderboard.tsx`, `useTelemetryWindow.ts`, `TrackMap.tsx`, `RaceControlFeed.tsx`, `WeatherWidget.tsx`, overall stack |
 | [robvdpol/RaceControl](https://github.com/robvdpol/RaceControl) | GPL-3.0 | Season → event → session picker UX (no video-streaming features were adopted — out of scope and the likely source of that project's takedown) | `SessionPicker.tsx` |
-| — new in this project — | MIT | OpenF1 as a JS-native real-telemetry data source (no Python/Rust backend needed); rate-limit-aware fetch client; standings page; dark UI throughout | `openf1.ts`, `standings/page.tsx` |
+|[vladlen-codes/f1-pitwall](https://github.com/vladlen-codes/f1-pitwall) | MIT | OpenF1 as a JS-native real-telemetry data source (no Python/Rust backend needed); rate-limit-aware fetch client; standings page; dark UI throughout | `openf1.ts`, `standings/page.tsx` |
 
 ### Licensing note
 
