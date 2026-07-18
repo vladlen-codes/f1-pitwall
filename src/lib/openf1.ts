@@ -16,6 +16,19 @@ import type {
 
 const BASE_URL = "https://api.openf1.org/v1";
 
+// OpenF1 returns 401 for the whole free tier (not just this app) while any
+// F1 session is live, even for past-season data — so callers can branch on
+// `status` to show a friendlier message instead of the raw API text.
+export class OpenF1Error extends Error {
+  constructor(
+    message: string,
+    public status: number,
+  ) {
+    super(message);
+    this.name = "OpenF1Error";
+  }
+}
+
 /**
  * OpenF1 (https://openf1.org) is a free, keyless REST API for real F1 timing,
  * telemetry and position data. Query params double as filters, e.g.
@@ -73,7 +86,7 @@ async function get<T>(
         .json()
         .then((body) => (typeof body?.detail === "string" ? body.detail : undefined))
         .catch(() => undefined);
-      throw new Error(detail ?? `OpenF1 request failed (${res.status}): ${url}`);
+      throw new OpenF1Error(detail ?? `OpenF1 request failed (${res.status}): ${url}`, res.status);
     }
     return res.json();
   }

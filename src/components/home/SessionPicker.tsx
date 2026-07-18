@@ -2,13 +2,20 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { openf1 } from "@/lib/openf1";
+import { openf1, OpenF1Error } from "@/lib/openf1";
 import type { Meeting, Session } from "@/types/openf1";
 
 const YEARS = [2026, 2025, 2024, 2023];
 
 function sortByDate<T extends { date_start: string }>(rows: T[]): T[] {
   return [...rows].sort((a, b) => new Date(a.date_start).getTime() - new Date(b.date_start).getTime());
+}
+
+function friendlyErrorMessage(err: unknown, fallback: string): string {
+  if (err instanceof OpenF1Error && err.status === 401) {
+    return "A live session is in progress — replay data will be available again once it ends.";
+  }
+  return err instanceof Error ? err.message : fallback;
 }
 
 export function SessionPicker() {
@@ -35,7 +42,7 @@ export function SessionPicker() {
       })
       .catch((err: unknown) => {
         if (cancelled) return;
-        setMeetingsError(err instanceof Error ? err.message : "Failed to load meetings.");
+        setMeetingsError(friendlyErrorMessage(err, "Failed to load meetings."));
       });
     return () => {
       cancelled = true;
@@ -54,7 +61,7 @@ export function SessionPicker() {
       })
       .catch((err: unknown) => {
         if (cancelled) return;
-        setSessionsError(err instanceof Error ? err.message : "Failed to load sessions.");
+        setSessionsError(friendlyErrorMessage(err, "Failed to load sessions."));
       });
     return () => {
       cancelled = true;
