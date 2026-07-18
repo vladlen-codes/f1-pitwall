@@ -131,7 +131,7 @@ part of this app:
 
 ### Licensing note
 
-f1-dash is **AGPL-3.0** and RaceControl is **GPL-3.0** — both copyleft.
+f1-dash is **AGPL-3.0** and RaceControl is **GPL-3.0** both copyleft.
 Pitwall reimplements their *concepts* (layout, data-flow patterns, UX) in
 original TypeScript/React rather than porting their actual source, so this
 project can stay MIT rather than inheriting AGPL/share-alike obligations.
@@ -141,16 +141,16 @@ API *shape* (not code) informed the TypeScript types here.
 
 ## Known limitations
 
-- **Historical replay only** — no live-session mode. Live timing would
+- **Historical replay only** no live-session mode. Live timing would
   require a persistent WebSocket/SignalR proxy (as f1-dash's Rust
   `realtime` service does); out of scope for this pass. See f1-dash in the
   table above if you want to extend this later.
-- **Track outline is inferred, not authoritative** — it's traced from one
+- **Track outline is inferred, not authoritative** it's traced from one
   driver's clean lap of position data rather than official circuit/corner
   data (e.g. MultiViewer's `CircuitInfo`), so corner labels and marshal
   sectors aren't shown.
 - **OpenF1 is an unofficial, free API** with no uptime SLA or documented
-  rate limit — see the rate-limiting note above.
+  rate limit see the rate-limiting note above.
 
 ## Disclaimer
 
