@@ -54,7 +54,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000), pick a season and a
 Grand Prix, then a session, and the replay loads automatically. No API keys
-or environment variables are needed — both data sources are public.
+or environment variables are needed both data sources are public.
 
 ```bash
 npm run build   # production build
