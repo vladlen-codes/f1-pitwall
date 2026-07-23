@@ -5,6 +5,8 @@ scrub through it with a synced track map, leaderboard, tyre/gap data,
 per-driver telemetry, weather, and race control messages all from real,
 publicly available F1 data.
 
+![Dashboard](docs/img-2.png)
+
 This is a from-scratch, MIT-licensed re-platform. It draws feature *ideas*
 (not code) from four reference projects see [Feature provenance](#feature-provenance)
 for what came from where and why nothing was copied line-for-line.
@@ -115,6 +117,8 @@ practice:
   reloads) you may still see the initial load take a few seconds while it
   backs off — this is a known constraint of a free, unauthenticated public
   API, not a bug in the app.
+
+![Dashboard](docs/img-3.png)
 
 ## Feature provenance
 
